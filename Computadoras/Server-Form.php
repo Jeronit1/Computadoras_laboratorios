@@ -29,6 +29,9 @@ if (isset($_POST['submit'])) {//toma los datos del formulario registro para subi
     if (empty($HDD)) {
         echo "<p class='error'>* Agregue el HDD</p>";//mensaje de error si el telefono esta vacio
     }
+    if (empty($Marca)) {
+        echo "<p class='error'>* Agregue la Marca de PC</p>";//mensaje de error si el telefono esta vacio
+    }
     if (empty($Laboratorio)) {
         echo "<p class='error'>* Agregue un laboratorio</p>";//mensaje de error si el telefono esta vacio
     }
@@ -36,11 +39,13 @@ if (isset($_POST['submit'])) {//toma los datos del formulario registro para subi
         echo "<p class='error'>* Agregue el tipo de dimm</p>";//mensaje de error si el telefono esta vacio
     }
     
-    if (strlen($_POST['Procesador']) > 1 && strlen($_POST['RAM']) > 1 && strlen($_POST['MotherBoard']) > 1 && strlen($_POST['Zocalos']) > 1 && strlen($_POST['HDD (con tipo)']) > 1 && strlen($_POST['Marca']) > 1 && strlen($_POST['Laboratorio']) > 1 && strlen($_POST['DIMMs']) > 1) {//verifica que los campos no esten vacios
-        $Pedido= "INSERT INTO `pcs`(`Procesador`, `RAM`, `MotherBoard`, `Zocalos`, `HDD (con tipo)`, `Marca`, `Laboratorio`, `DIMMs`) VALUES ('$Procesador','$RAM','$MotherBoard','$Zocalos','$HDD]','$Marca','$Laboratorio','$DIMMs]')"; //Inserta todos los datos a la base de datos
-        $Resultado = mysqli_query($conex, $Pedido);//verifica que los datos se hayan enviado correctamente en el if de abajo
+    if (strlen($_POST['Procesador']) > 1 && strlen($_POST['RAM']) > 1 && strlen($_POST['MotherBoard']) > 1 && strlen($_POST['Zocalos']) > 1 && strlen($_POST['HDD']) > 1 && strlen($_POST['Marca']) > 1 && strlen($_POST['Laboratorio']) > 1 && strlen($_POST['DIMMs']) > 1) {//verifica que los campos no esten vacios
+       // $Pedido= "INSERT INTO `pcs`(`Procesador`, `RAM`, `MotherBoard`, `Zocalos`, `HDD`, `Marca`, `Laboratorio`, `DIMMs`) VALUES ('$Procesador','$RAM','$MotherBoard','$Zocalos','$HDD','$Marca','$Laboratorio','$DIMMs')"; //Inserta todos los datos a la base de datos
+        $Pedidos= "INSERT INTO `pcs`(`Procesador`, `RAM`, `MotherBoard`, `Zocalos`, `HDD`, `Marca`, `Laboratorio`, `DIMMs`) VALUES ('$Procesador','$RAM','$MotherBoard','$Zocalos','$HDD','$Marca','$Laboratorio','$DIMMs')";
+        $Resultado = mysqli_query($conex, $Pedidos);//verifica que los datos se hayan enviado correctamente en el if de abajo
         if ($Resultado) {
-          echo "<script>otraPagina();</script>";//mensaje de que se inscribio correctamente
+          //echo "<script>otraPagina();</script>";//mensaje de que se inscribio correctamente
+          echo "hola";
         };
     }}
 }
