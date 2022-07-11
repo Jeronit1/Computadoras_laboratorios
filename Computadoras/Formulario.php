@@ -25,6 +25,9 @@ session_start();//se inicia la sesion que sirve para guardar variables globales 
    <?php if ($_SESSION["UserAdmin"]) {//si el usuario es el administrador = se ve el boton ver usuarios?>
     <a href="/Computadoras/Usuarios_logeados.php"><input type="button" value="Ver usuarios"></a><!--boton que lleva a la tabla de usuarios logeados-->
     <?php }?>
+     <?php if ($_SESSION["UserAdmin"]) {//si el usuario es el administrador = se ve el boton ver usuarios?>
+    <a href="/Computadoras-BasedeDatos/Tabla-Computadoras.php"><input type="button" value="Editar tabla"></a><!--boton que lleva a la tabla de usuarios logeados-->
+    <?php }?>
     <form action="" method="POST">
         <p>Procesador:<input type="text" name="Procesador" value="<?php
                                                         if (isset($Procesador)) echo "$Procesador" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina -->
@@ -38,8 +41,11 @@ session_start();//se inicia la sesion que sirve para guardar variables globales 
                                                         if (isset($HDD)) echo "$HDD" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina -->
         <p>Marca:<input type="text" name="Marca" value="<?php
                                                         if (isset($Marca)) echo "$Marca" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina -->
-        <p>Laboratorio:<input type="text" name="Laboratorio" value="<?php
-                                                        if (isset($Laboratorio)) echo "$Laboratorio" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina -->
+        <p>Seleccionar:<select name="Laboratorio">
+            <option value="Laboratorio 1">Laboratorio 1</option>
+            <option value="Laboratorio 2">Laboratorio 2</option>
+            <option value="Laboratorio 3">Laboratorio 3</option>
+        </select></p>
         <p>DIMMs:<input type="text" name="DIMMs" value="<?php
                                                         if (isset($DIMMs)) echo "$DIMMs" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina --> 
         <p><input type="submit" name="submit" value="Enviar" /></p>
