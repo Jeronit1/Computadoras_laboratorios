@@ -1,5 +1,8 @@
 <?php
 session_start();//se inicia la sesion que sirve para guardar variables globales y utilizarlas para cerrar sesion y declarar una variable global
+include("Union-Server.php");//Unir el codigo del server-form
+$Laboratorios = "SELECT * FROM `laboratorios`";
+$resLaboratorio=$conex->query($Laboratorios);
 ?>
 <html>
 
@@ -19,6 +22,8 @@ session_start();//se inicia la sesion que sirve para guardar variables globales 
         $Marca = ($_POST['Marca']);
         $Laboratorio = ($_POST['Laboratorio']);
         $DIMMs = ($_POST['DIMMs']);
+        $Zocalos_Libres = ($_POST['Zocalos_Libres']);
+        //$PS2 = ($_POST['PS/2']);
     }
     ?>
     <a href="/Computadoras/Login/logout.php"><input type="button" value="Cerrar sesion" Cerrar Sesión></a><!--boton que provoca que la sesion se cierre-->
@@ -31,7 +36,7 @@ session_start();//se inicia la sesion que sirve para guardar variables globales 
     <form action="" method="POST">
         <p>Procesador:<input type="text" name="Procesador" value="<?php
                                                         if (isset($Procesador)) echo "$Procesador" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina -->
-        <p>RAM:<input type="text" name="RAM" value="<?php
+        <p>Memoria RAM:<input type="number" name="RAM" value="<?php
                                                          if (isset($RAM)) echo "$RAM" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina -->
         <p>MotherBoard:<input type="text" name="MotherBoard" value="<?php
                                                         if (isset($MotherBoard)) echo "$MotherBoard" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina -->
@@ -42,12 +47,19 @@ session_start();//se inicia la sesion que sirve para guardar variables globales 
         <p>Marca:<input type="text" name="Marca" value="<?php
                                                         if (isset($Marca)) echo "$Marca" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina -->
         <p>Seleccionar:<select name="Laboratorio">
-            <option value="Laboratorio 1">Laboratorio 1</option>
-            <option value="Laboratorio 2">Laboratorio 2</option>
-            <option value="Laboratorio 3">Laboratorio 3</option>
+            <option value="">Laboratorios</option>
+            <?php
+                while ($RegistroLaboratorios = $resLaboratorio->fetch_array(MYSQLI_BOTH))
+                {
+                    echo '<option value="'.$RegistroLaboratorios['Laboratorio'].'">'.$RegistroLaboratorios['Laboratorio'].'</option>';
+                }
+            ?>
         </select></p>
         <p>DIMMs:<input type="text" name="DIMMs" value="<?php
                                                         if (isset($DIMMs)) echo "$DIMMs" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina --> 
+        <p>Zocalos_Libres:<input type="text" name="Zocalos_Libres" value="<?php
+                                                        if (isset($Zocalos_Libres)) echo "$Zocalos_Libres" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina --> 
+       <!-- <p>PS/2:<input type="checkbox" name="PS/2" value="PS/2" /></p>-->
         <p><input type="submit" name="submit" value="Enviar" /></p>
     </form>
     <?php

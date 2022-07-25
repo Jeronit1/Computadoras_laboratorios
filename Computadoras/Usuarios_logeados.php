@@ -15,6 +15,8 @@ if ((($_SESSION["UserAdmin"]==0))) {//si el usuario no es administrador lo devue
         } else {
     ?>
 <a href="/Computadoras/Login/logout.php"><input type="button" value="Cerrar sesion" Cerrar Sesión></a><!--boton que provoca que la sesion se cierre-->
+<a href="/Computadoras/Formulario.php"><input type="button" value="Volver" Volver></a><!--boton que provoca que la sesion se cierre-->
+
 <br>
 <table>
         <tr> <!-- fila de la tabla-->
