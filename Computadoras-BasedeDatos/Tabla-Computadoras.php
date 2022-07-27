@@ -7,6 +7,10 @@ $xLaboratorio=$_POST['xLaboratorio'];
 $xProcesador=$_POST['xProcesador'];
 $xRAM=$_POST['xRAM'];
 ///////Boton Buscar Filtros////
+if (isset($_POST['Zocalos_Libres?'])){
+    $where="where Zocalos_Libres>'0'";
+    echo "hola";
+}
 if(isset($_POST['buscar'])){
     if (empty($_POST['xLaboratorio']) && empty($_POST['xRAM'])){
         $where="where Procesador like '".$xProcesador."%'";
@@ -32,6 +36,10 @@ $Laboratorios = "SELECT * FROM `laboratorios`";
 $PCs= "SELECT * FROM `pcs` $where ";
 $resPCs=$conexion->query($PCs);
 $resLaboratorio=$conexion->query($Laboratorios);
+
+if(mysqli_num_rows($resPCs)==0){
+$mensaje="<h1>No se encontraron registros con esas busquedas</h1>";
+}
 ////Ver si el usuario es administrador///
 if ((($_SESSION["UserAdmin"]==0))) {//si el usuario no es administrador lo devuelve al formulario
             header("location: /Computadoras/formulario.php");
@@ -49,6 +57,7 @@ if ((($_SESSION["UserAdmin"]==0))) {//si el usuario no es administrador lo devue
     <a href="/Computadoras/Login/logout.php"><input type="button" value="Cerrar sesion" Cerrar Sesión></a><!--boton que provoca que la sesion se cierre-->
     <a href="/Computadoras/Formulario.php"><input type="button" value="Volver" Volver></a><!--boton que provoca que la sesion se cierre-->
     <br></br>
+    <section>
     <form method="POST" class="Filtros">
         <select name="xLaboratorio">
             <option value="">Laboratorios</option>
@@ -61,9 +70,10 @@ if ((($_SESSION["UserAdmin"]==0))) {//si el usuario no es administrador lo devue
         </select>
         <input type="text" placeholder="Procesador..." name="xProcesador">
         <input type="number" name="xRAM" placeholder="PC con RAM mayor a..." />
-        Ver pc con zocalos Libres<input type="checkbox" name="Zocalos_Libres?" />
+        Ver pc con zocalos Libres<input type="checkbox" name="Zocalos_Libres?" value="value1" />
         <button name="buscar" type="submit">Buscar</button>
     </form>
+    
     <br></br>
     <table>
         <tr> <!-- fila de la tabla-->
@@ -102,8 +112,12 @@ if ((($_SESSION["UserAdmin"]==0))) {//si el usuario no es administrador lo devue
         } }
         ?>
     </table>
+    <?php
+    echo $mensaje;
+    ?>
     <button onclick="window.location.href = '/Computadoras/Formulario.php'">Anexar</button><!-- boton que lleva a anexar un nuevo usuario-->
-
+    
+    </section>
 </body>
 
 </html>
