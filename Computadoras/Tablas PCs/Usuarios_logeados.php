@@ -36,6 +36,7 @@ include("C:/xampp/htdocs/Computadoras/Union-Server.php");
                 <td>Nombre</td><!-- columna nombre-->
                 <td>Email</td><!-- columna email-->
                 <td>Contraseña</td><!-- columna contraseña-->
+                <td>Administrador</td><!-- columna contraseña-->
             </tr>
             <?php
             $SQL = "SELECT * FROM `login-alumnos` WHERE 1"; //selecciono toda la base de datos para mostrarla
@@ -47,6 +48,7 @@ include("C:/xampp/htdocs/Computadoras/Union-Server.php");
                     <td><?php echo $mostrar['Nombre'] ?></td><!-- muestra el nombre de la base de datos en la tabla-->
                     <td><?php echo $mostrar['Email'] ?></td><!-- muestra la email de la base de datos en la tabla-->
                     <td><?php echo $mostrar['Contraseña'] ?></td><!-- muestra el contraseña de la base de datos en la tabla-->
+                    <td><?php echo $mostrar['administrador'] ?></td><!-- muestra el contraseña de la base de datos en la tabla-->
                 </tr>
         <?php
             }

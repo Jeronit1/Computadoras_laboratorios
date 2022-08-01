@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {//toma los datos del formulario registro para subi
     
     if (strlen($_POST['Procesador']) > 1 && strlen($_POST['RAM']) > 0 && strlen($_POST['MotherBoard']) > 1 &&  strlen($_POST['Zocalos']) > 0 && strlen($_POST['HDD']) > 1 && strlen($_POST['Marca']) > 0 && strlen($_POST['DIMMs']) > 1 && strlen($_POST['Zocalos_Libres']) > 0) {//verifica que los campos no esten vacios
        // $Pedido= "INSERT INTO `pcs`(`Procesador`, `RAM`, `MotherBoard`, `Zocalos`, `HDD`, `Marca`, `Laboratorio`, `DIMMs`) VALUES ('$Procesador','$RAM','$MotherBoard','$Zocalos','$HDD','$Marca','$Laboratorio','$DIMMs')"; //Inserta todos los datos a la base de datos
-        $Pedidos= "INSERT INTO `pcs`(`Procesador`, `RAM`, `MotherBoard`, `Zocalos`, `HDD`, `Marca`, `Laboratorio`, `DIMMs`, `Zocalos_Libres`, `Administrador`) VALUES ('$Procesador','$RAM','$MotherBoard','$Zocalos','$HDD','$Marca','$Laboratorio','$DIMMs','$Zocalos_Libres','".$_SESSION['Nombre']."')";
+        $Pedidos= "INSERT INTO `pcs`(`Procesador`, `RAM`, `MotherBoard`, `Zocalos`, `HDD`, `Marca`, `Laboratorio`, `DIMMs`, `Zocalos_Libres`, `PS/2`, `Administrador`) VALUES ('$Procesador','$RAM','$MotherBoard','$Zocalos','$HDD','$Marca','$Laboratorio','$DIMMs','$Zocalos_Libres','$PS2','".$_SESSION['Nombre']."')";
         $Resultado = mysqli_query($conex, $Pedidos);//verifica que los datos se hayan enviado correctamente en el if de abajo
         if ($Resultado) {
           echo "<script>otraPagina();</script>";//mensaje de que se inscribio correctamente

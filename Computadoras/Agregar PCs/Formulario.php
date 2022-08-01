@@ -26,7 +26,12 @@ if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devu
         $Laboratorio = ($_POST['Laboratorio']);
         $DIMMs = ($_POST['DIMMs']);
         $Zocalos_Libres = ($_POST['Zocalos_Libres']);
-        //$PS2 = ($_POST['PS/2']);
+         if (!empty($_POST['PS2'])) {
+        $PS2=1;  
+        }
+        else{
+        $PS2=0;
+        };
     }
     ?>
     <header>
@@ -82,7 +87,7 @@ if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devu
         <p>Zocalos_Libres:<input type="text" name="Zocalos_Libres" value="<?php
                                                                             if (isset($Zocalos_Libres)) echo "$Zocalos_Libres" ?>" /></p>
         <!--El if  Deja escrito en el contenido cuando se recarga la pagina -->
-        <!-- <p>PS/2:<input type="checkbox" name="PS/2" value="PS/2" /></p>-->
+        <p>PS/2:<input type="checkbox" name="PS2" value="1" /></p>
         <p><input type="submit" name="submit" value="Enviar" /></p>
     </form>
     <?php
