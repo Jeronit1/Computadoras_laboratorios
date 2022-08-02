@@ -28,12 +28,17 @@ include("C:/xampp/htdocs/Computadoras/Union-Server.php"); //Unir el codigo del s
         </nav>
     </header>
     <br></br>
-    <form action="/Computadoras/Perfil/Editar_Perfil.php" method="POST">
+    <form action="/Computadoras/Perfil/Editar_Perfil.php" method="POST" enctype="multipart/form-data">
     <?php
         $SQL= "SELECT * FROM `login-alumnos` WHERE IDLogin = '".$_SESSION["IDLogin"]."'";//se selecciona atraves del id para que muestre el usuario a actualizar
         $Resultado=mysqli_query($conex, $SQL);//conexion para ver la tabla del usuario
         while ($mostrar=mysqli_fetch_array($Resultado)) {//imprime la tabla del usuario
         ?>
+             <input type="file" name="Imagen" id="seleccionArchivos" accept="image/*"><!-- espacio donde se sube la imagen-->
+            <br><br>
+            <!-- La imagen que vamos a usar para previsualizar lo que el usuario selecciona -->
+            <img id="imagenPrevisualizacion"><!-- muestra la imagen subida-->
+            <img src="<?php echo $mostrar['Imagen'] ?>" alt="imagen">
             <p>Nombre: <?php echo $mostrar['Nombre'] ?></p>
             <p>Email: <?php echo $mostrar['Email'] ?></p>
             <p>Contraseña: <?php echo $mostrar['Contraseña'] ?></p>
