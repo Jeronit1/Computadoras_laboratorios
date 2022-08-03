@@ -14,7 +14,7 @@
         $contraseña2 = trim($_POST['contraseña2']);
     }
     ?>
-    <form action="" method="post">  <!-- Formulario de registro -->
+    <form action="" method="post" enctype="multipart/form-data">  <!-- Formulario de registro -->
        
         <p>Nombre:<input type="text" name="name" value="<?php
                                                         if (isset($name)) echo "$name" ?>" /></p><!--El if  Deja escrito en el contenido cuando se recarga la pagina -->

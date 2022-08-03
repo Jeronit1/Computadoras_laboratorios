@@ -25,6 +25,7 @@ if (isset($_POST['submitIn'])) {//toma los datos del formulario registro para su
             $_SESSION["Nombre"] = $row["Nombre"]; 
             $_SESSION["UserAdmin"] = $row["administrador"]; 
             $_SESSION["Email"] = $row["Email"];
+            $_SESSION["Imagen"]=$row["Imagen"];
             //if $_SESSION["UserAdmin"] != 1  no es administrador
             //header()
         if ($Resultado) {//verifica que los datos se envien a la base de datos

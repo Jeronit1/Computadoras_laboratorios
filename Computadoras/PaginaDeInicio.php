@@ -33,6 +33,7 @@
     <div class="ConteinerInicio">
     <?php
         echo "<h1>Bienvenido " . $_SESSION["Nombre"] . "</h1>";?>
+        <img src="<?php echo $_SESSION['Imagen'] ?>" alt="imagen">
 
         <a href="/Computadoras/Tablas PCs/Tabla-Computadoras.php"><input class="BotonInicio" type="button" value="Ver tabla de las PCs"></a> <a href="/Computadoras/Agregar PCs/Formulario.php"><input class="BotonInicio" type="button" value="Agregar PCs"></a><?php
     }
