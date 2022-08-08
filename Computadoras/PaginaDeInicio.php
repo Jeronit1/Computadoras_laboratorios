@@ -8,6 +8,7 @@
 </head>
 
 <body>
+<img src="<?php echo $_SESSION['Imagen'] ?>" alt="imagen"> <?php echo $_SESSION['Nombre']  ?>
     <?php
     if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devuelve al formulario
         header("location: /Computadoras/Login/Login.php");
@@ -33,7 +34,7 @@
         <div class="ConteinerInicio">
             <?php
             echo "<h1>Bienvenido " . $_SESSION["Nombre"] . "</h1>"; ?>
-            <img src="<?php echo $_SESSION['Imagen'] ?>" alt="imagen">
+            
 
             <a href="/Computadoras/Tablas PCs/Tabla-Computadoras.php"><input class="BotonInicio" type="button" value="Ver tabla de las PCs"></a> <?php
                                                                                                                                                 }

@@ -3,7 +3,7 @@ session_start();
 include("C:/xampp/htdocs/Computadoras/Union-Server.php");
 /////Variables de consultas/////
 ?>
-<img src="<?php echo str_replace("./", "../", $_SESSION['Imagen']) ?>" alt="imagen">
+<img src="<?php echo str_replace("./", "../", $_SESSION['Imagen']) ?>" alt="imagen"> <?php echo $_SESSION['Nombre']  ?>
 <header>
     <nav>
         <ul id="menu">

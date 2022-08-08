@@ -14,6 +14,7 @@ if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devu
     </head>
 
     <body>
+    <img src="<?php echo str_replace("./", "../../", $_SESSION['Imagen']) ?>" alt="imagen"> <?php echo $_SESSION['Nombre']  ?>
         <header>
             <nav>
                 <ul id="menu">

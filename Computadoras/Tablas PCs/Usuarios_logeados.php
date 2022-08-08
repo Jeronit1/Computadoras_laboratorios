@@ -10,6 +10,7 @@ include("C:/xampp/htdocs/Computadoras/Union-Server.php");
 </head>
 
 <body>
+<img src="<?php echo str_replace("./", "../", $_SESSION['Imagen']) ?>" alt="imagen"> <?php echo $_SESSION['Nombre']  ?>
     <?php
     if ((($_SESSION["UserAdmin"] == 0))) { //si el usuario no es administrador lo devuelve al formulario
         header("location: /Computadoras/PaginaDeInicio.php");

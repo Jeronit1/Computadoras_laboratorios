@@ -15,7 +15,7 @@ if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devu
     </head>
 
     <body>
-        <img src="<?php echo str_replace("./", "../", $_SESSION['Imagen']) ?>" alt="imagen">
+        <img src="<?php echo str_replace("./", "../", $_SESSION['Imagen']) ?>" alt="imagen"> <?php echo $_SESSION['Nombre']  ?>
         <?php
 
         if (isset($_POST['submit'])) { //toma los datos del formulario y lo almaceno en variables
