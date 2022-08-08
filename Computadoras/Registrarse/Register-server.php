@@ -33,37 +33,39 @@ if (isset($_POST['submitUp'])) { //toma los datos del formulario registro para s
                     {
                         echo "<p class='error'>Ya existe el Usuario</p>";
                     } else {
-                    $Imagen_Default = '../intranet/uploads/Logo2345456'; //sirve para guardar las imagenes en intrane
-                    $Pedido = "INSERT INTO `login-alumnos`(`Nombre`, `Email`, `Imagen`, `Contraseña`, `Confirmacion`) VALUES ('$name','$email','$Imagen_Default','$contraseña','$contraseña2')"; //Inserta todos los datos a la base de datos
-                    $Resultado = mysqli_query($conex, $Pedido); //verifica que los datos se hayan enviado correctamente en el if de abajo
-                    if ($Resultado) { //verifica que los datos se envien a la base de datos
-                        echo "<h>Te inscribiste a alumnos</h>";
-                        header("location: /Computadoras/Login/Login.php"); //lo envia al login
-                    } else {
-                        echo "<h2>Ocurrio un error</h2>"; //susede raramente este mensaje
+                        $Imagen_Default = './intranet/uploads/Logo2345456.png'; //sirve para guardar las imagenes en intrane
+                        $Pedido = "INSERT INTO `login-alumnos`(`Nombre`, `Email`, `Imagen`, `Contraseña`, `Confirmacion`) VALUES ('$name','$email','$Imagen_Default','$contraseña','$contraseña2')"; //Inserta todos los datos a la base de datos
+                        $Resultado = mysqli_query($conex, $Pedido); //verifica que los datos se hayan enviado correctamente en el if de abajo
+                        if ($Resultado) { //verifica que los datos se envien a la base de datos
+                            echo "<h>Te inscribiste a alumnos</h>";
+                            header("location: /Computadoras/Login/Login.php"); //lo envia al login
+                        } else {
+                            echo "<h2>Ocurrio un error</h2>"; //susede raramente este mensaje
+                        }
                     }
-                }} else {
-                $Nombre_Imagen = time() . $_FILES['Imagen']['name']; //se obtiene el nombre de la imagen subida
-                // $Tipo_Imagen=$_FILES['Imagen'] ['type']; //se puede obtener el tipo de imagen
-                //$Tamaño_Imagen=$_FILES['Imagen'] ['size'];//se puede obtener el tamaño original de la imagen
-                $Carpeta_Destino = '../intranet/uploads/'; //sirve para guardar las imagenes en intranet
-                move_uploaded_file($_FILES['Imagen']['tmp_name'], $Carpeta_Destino . $Nombre_Imagen); //mueve la imagen subida a intranet
-                ///////CONEXION/////////////
-                $result = mysqli_query($conex, "SELECT * FROM `login-alumnos` WHERE Email='$email'"); //Guarda en resultado todos los mail que existan en la base de datos para compararlos y tirar error si ponen uno igual
-                if (mysqli_num_rows($result) > 0)  // Si es mayor a cero imprimimos que ya existe el usuario
-                {
-                    echo "<p class='error'>Ya existe el Usuario</p>";
                 } else {
-                    $Pedido = "INSERT INTO `login-alumnos`(`Nombre`, `Email`, `Imagen`, `Contraseña`, `Confirmacion`) VALUES ('$name','$email','$Carpeta_Destino$Nombre_Imagen','$contraseña','$contraseña2')"; //Inserta todos los datos a la base de datos
-                    $Resultado = mysqli_query($conex, $Pedido); //verifica que los datos se hayan enviado correctamente en el if de abajo
-                    if ($Resultado) { //verifica que los datos se envien a la base de datos
-                        echo "<h>Te inscribiste a alumnos</h>";
-                        header("location: /Computadoras/Login/Login.php"); //lo envia al login
+                    $Nombre_Imagen = time() . $_FILES['Imagen']['name']; //se obtiene el nombre de la imagen subida
+                    // $Tipo_Imagen=$_FILES['Imagen'] ['type']; //se puede obtener el tipo de imagen
+                    //$Tamaño_Imagen=$_FILES['Imagen'] ['size'];//se puede obtener el tamaño original de la imagen
+                    $Carpeta_Destino = '../intranet/uploads/'; //sirve para guardar las imagenes en intranet
+                    move_uploaded_file($_FILES['Imagen']['tmp_name'], $Carpeta_Destino . $Nombre_Imagen); //mueve la imagen subida a intranet
+                    ///////CONEXION/////////////
+                    $result = mysqli_query($conex, "SELECT * FROM `login-alumnos` WHERE Email='$email'"); //Guarda en resultado todos los mail que existan en la base de datos para compararlos y tirar error si ponen uno igual
+                    if (mysqli_num_rows($result) > 0)  // Si es mayor a cero imprimimos que ya existe el usuario
+                    {
+                        echo "<p class='error'>Ya existe el Usuario</p>";
                     } else {
-                        echo "<h2>Ocurrio un error</h2>"; //susede raramente este mensaje
+                        $Pedido = "INSERT INTO `login-alumnos`(`Nombre`, `Email`, `Imagen`, `Contraseña`, `Confirmacion`) VALUES ('$name','$email','./intranet/uploads/$Nombre_Imagen','$contraseña','$contraseña2')"; //Inserta todos los datos a la base de datos
+                        $Resultado = mysqli_query($conex, $Pedido); //verifica que los datos se hayan enviado correctamente en el if de abajo
+                        if ($Resultado) { //verifica que los datos se envien a la base de datos
+                            echo "<h>Te inscribiste a alumnos</h>";
+                            header("location: /Computadoras/Login/Login.php"); //lo envia al login
+                        } else {
+                            echo "<h2>Ocurrio un error</h2>"; //susede raramente este mensaje
+                        }
                     }
                 }
-            }}
+            }
         }
     }
 }

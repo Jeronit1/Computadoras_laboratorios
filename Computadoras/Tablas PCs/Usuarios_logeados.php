@@ -15,19 +15,19 @@ include("C:/xampp/htdocs/Computadoras/Union-Server.php");
         header("location: /Computadoras/PaginaDeInicio.php");
     } else {
     ?>
-    <header>
-        <nav>
-        <ul id="menu">
-        <li><a href="/Computadoras/PaginaDeInicio.php">Inicio</a>
-        <ul>  
-            <li><a href="/Computadoras/Tablas PCs/Tabla-Computadoras.php">Ver Tabla de PCs</a></li>
-            <li><a href="/Computadoras/Perfil/Perfil.php">Perfil</a></li>
-            <li><a href="/Computadoras/Login/Logout.php">Cerrar Sesion</a></li>
-        </ul>
-        </li>
-        </ul>
-        </nav>
-    </header>
+        <header>
+            <nav>
+                <ul id="menu">
+                    <li><a href="/Computadoras/PaginaDeInicio.php">Inicio</a>
+                        <ul>
+                            <li><a href="/Computadoras/Tablas PCs/Tabla-Computadoras.php">Ver Tabla de PCs</a></li>
+                            <li><a href="/Computadoras/Perfil/Perfil.php">Perfil</a></li>
+                            <li><a href="/Computadoras/Login/Logout.php">Cerrar Sesion</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
         <br></br>
         <table>
             <tr>
@@ -37,6 +37,7 @@ include("C:/xampp/htdocs/Computadoras/Union-Server.php");
                 <td>Email</td><!-- columna email-->
                 <td>Contraseña</td><!-- columna contraseña-->
                 <td>Administrador</td><!-- columna contraseña-->
+                <td>Editar</td><!-- columna editar-->
             </tr>
             <?php
             $SQL = "SELECT * FROM `login-alumnos` WHERE 1"; //selecciono toda la base de datos para mostrarla

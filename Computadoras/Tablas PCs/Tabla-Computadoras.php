@@ -3,6 +3,7 @@ session_start();
 include("C:/xampp/htdocs/Computadoras/Union-Server.php");
 /////Variables de consultas/////
 ?>
+<img src="<?php echo str_replace("./", "../", $_SESSION['Imagen']) ?>" alt="imagen">
 <header>
     <nav>
         <ul id="menu">
@@ -36,31 +37,31 @@ if (isset($_POST['xRAM'])) {
 if (isset($_POST['buscar'])) {
     if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xProcesador']) && empty($_POST['xLaboratorio']) && empty($_POST['xRAM'])) {
         $where = "where Zocalos_Libres>'0'";
-    }else if (empty($_POST['xLaboratorio']) && empty($_POST['xRAM']) && empty($_POST['Zocalos_Libres?'])) {
+    } else if (empty($_POST['xLaboratorio']) && empty($_POST['xRAM']) && empty($_POST['Zocalos_Libres?'])) {
         $where = "where Procesador like '" . $xProcesador . "%'";
     } else if (empty($_POST['xLaboratorio']) && empty($_POST['xProcesador']) && empty($_POST['Zocalos_Libres?'])) {
         $where = "where RAM>" . $xRAM . "";
     } else if (empty($_POST['xRAM']) && empty($_POST['xProcesador']) && empty($_POST['Zocalos_Libres?'])) {
         $where = "where Laboratorio='" . $xLaboratorio . "'";
-    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xProcesador']) && empty($_POST['xLaboratorio'])){
+    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xProcesador']) && empty($_POST['xLaboratorio'])) {
         $where = "where Zocalos_Libres>'0' and  RAM>" . $xRAM . "";
-    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xProcesador']) && empty($_POST['xRAM'])){
+    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xProcesador']) && empty($_POST['xRAM'])) {
         $where = "where Zocalos_Libres>'0' and  Laboratorio='" . $xLaboratorio . "'";
-    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xLaboratorio']) && empty($_POST['xRAM'])){
+    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xLaboratorio']) && empty($_POST['xRAM'])) {
         $where = "where Zocalos_Libres>'0' and Procesador like '" . $xProcesador . "%'";
-    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xLaboratorio'])){
+    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xLaboratorio'])) {
         $where = "where Zocalos_Libres>'0' and Procesador like '" . $xProcesador . "%' and RAM>" . $xRAM . "";
-    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xRAM'])){
+    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xRAM'])) {
         $where = "where Zocalos_Libres>'0' and Procesador like '" . $xProcesador . "%' and Laboratorio='" . $xLaboratorio . "'";
-    }else if (empty($_POST['Zocalos_Libres?'])) {
+    } else if (empty($_POST['Zocalos_Libres?'])) {
         $where = "where Procesador like '" . $xProcesador . "%' and RAM>" . $xRAM . " and Laboratorio='" . $xLaboratorio . "'";
-    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xProcesador'])){
+    } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xProcesador'])) {
         $where = "where Zocalos_Libres>'0' and RAM>" . $xRAM . " and Laboratorio='" . $xLaboratorio . "'";
-    } else if (empty($_POST['xLaboratorio'])&& empty($_POST['Zocalos_Libres?'])) {
+    } else if (empty($_POST['xLaboratorio']) && empty($_POST['Zocalos_Libres?'])) {
         $where = "where RAM>'" . $xRAM . "' and Procesador like '" . $xProcesador . "%'";
-    } else if (empty($_POST['xProcesador'])&& empty($_POST['Zocalos_Libres?'])) {
+    } else if (empty($_POST['xProcesador']) && empty($_POST['Zocalos_Libres?'])) {
         $where = "where RAM>'" . $xRAM . "' and Laboratorio='" . $xLaboratorio . "'";
-    } else if (empty($_POST['xRAM'])&& !empty($_POST['Zocalos_Libres?']) && empty($_POST['xLaboratorio']) ) {
+    } else if (empty($_POST['xRAM']) && !empty($_POST['Zocalos_Libres?']) && empty($_POST['xLaboratorio'])) {
         $where = "where Laboratorio='" . $xLaboratorio . "' and Procesador like '" . $xProcesador . "%'";
     } else {
         $where = "where Laboratorio='" . $xLaboratorio . "' and Procesador like '" . $xProcesador . "%' and RAM>'" . $xRAM . "' and Zocalos_Libres>'0'";
@@ -122,33 +123,39 @@ if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devu
                     <td>Zocalos Libres</td>
                     <td>PS/2</td>
                     <td>Administrador</td>
-                    <td>Editar</td><!-- columna editar-->
+                    <?php if ($_SESSION["UserAdmin"]) {
+                    ?>
+                        <td>Editar</td><!-- columna editar-->
                 </tr>
-                <?php
-                while ($mostrar = $resPCs->fetch_array(MYSQLI_BOTH)) { //imprime por pantalla toda la base de datos 
-                ?>
-                    <tr>
-                        <input type="hidden" value="<?php echo $mostrar['ID'] ?>" name="ID"><!-- ID oculto para ocupar en eliminar y editar(con el id se sabe cual se selecciono para hacer los cambios) -->
-                        <td><?php echo $mostrar['ID'] ?></td><!-- muestra el id de la base de datos en la tabla-->
-                        <td><?php echo $mostrar['Procesador'] ?></td><!-- muestra el id de la base de datos en la tabla-->
-                        <td><?php echo $mostrar['RAM'] ?></td><!-- muestra el nombre de la base de datos en la tabla-->
-                        <td><?php echo $mostrar['MotherBoard'] ?></td><!-- muestra la edad de la base de datos en la tabla-->
-                        <td><?php echo $mostrar['Zocalos'] ?></td><!-- muestra el mail de la base de datos en la tabla-->
-                        <td><?php echo $mostrar['HDD'] ?></td><!-- muestra el telefono de la base de datos en la tabla-->
-                        <td><?php echo $mostrar['Marca'] ?></td><!-- muestra la fecha de la base de datos en la tabla-->
-                        <td></a><?php echo $mostrar['Laboratorio'] ?></td><!-- muestra la imagen de la base de datos en la tabla(URL)-->
-                        <td><?php echo $mostrar['DIMMs'] ?></td><!-- muestra el id_login de la base de datos en la tabla-->
-                        <td><?php echo $mostrar['Zocalos_Libres'] ?></td>
-                        <td><?php echo $mostrar['PS/2'] ?></td>
-                        <td><?php echo $mostrar['Administrador'] ?></td>
+            <?php
+                    }
+                    while ($mostrar = $resPCs->fetch_array(MYSQLI_BOTH)) { //imprime por pantalla toda la base de datos 
+            ?>
+                <tr>
+                    <input type="hidden" value="<?php echo $mostrar['ID'] ?>" name="ID"><!-- ID oculto para ocupar en eliminar y editar(con el id se sabe cual se selecciono para hacer los cambios) -->
+                    <td><?php echo $mostrar['ID'] ?></td><!-- muestra el id de la base de datos en la tabla-->
+                    <td><?php echo $mostrar['Procesador'] ?></td><!-- muestra el id de la base de datos en la tabla-->
+                    <td><?php echo $mostrar['RAM'] ?></td><!-- muestra el nombre de la base de datos en la tabla-->
+                    <td><?php echo $mostrar['MotherBoard'] ?></td><!-- muestra la edad de la base de datos en la tabla-->
+                    <td><?php echo $mostrar['Zocalos'] ?></td><!-- muestra el mail de la base de datos en la tabla-->
+                    <td><?php echo $mostrar['HDD'] ?></td><!-- muestra el telefono de la base de datos en la tabla-->
+                    <td><?php echo $mostrar['Marca'] ?></td><!-- muestra la fecha de la base de datos en la tabla-->
+                    <td></a><?php echo $mostrar['Laboratorio'] ?></td><!-- muestra la imagen de la base de datos en la tabla(URL)-->
+                    <td><?php echo $mostrar['DIMMs'] ?></td><!-- muestra el id_login de la base de datos en la tabla-->
+                    <td><?php echo $mostrar['Zocalos_Libres'] ?></td>
+                    <td><?php echo $mostrar['PS/2'] ?></td>
+                    <td><?php echo $mostrar['Administrador'] ?></td>
+                    <?php if ($_SESSION["UserAdmin"]) {
+                    ?>
                         <td><a href="/Computadoras/Tablas PCs/update/actualizar.php?ID=<?php echo $mostrar["ID"]; ?>">Editar/</a>
                             <a href="/Computadoras/Tablas PCs/delete/eliminar.php?ID=<?php echo $mostrar["ID"]; ?>">Eliminar</a><!-- muestra los enlaces para editar o eliminar-->
                         </td>
-                    </tr>
-            <?php
+                </tr>
+    <?php
+                        }
+                    }
                 }
-            }
-            ?>
+    ?>
             </table>
             <?php
             if (!empty($mensaje)) {
@@ -156,8 +163,12 @@ if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devu
             }
             ?>
             <br>
-            <button class="botonAnexar" onclick="window.location.href = '/Computadoras/Agregar PCs/Formulario.php'">Anexar</button><!-- boton que lleva a anexar un nuevo usuario-->
-
+            <?php if ($_SESSION["UserAdmin"]) {
+            ?>
+                <button class="botonAnexar" onclick="window.location.href = '/Computadoras/Agregar PCs/Formulario.php'">Anexar</button><!-- boton que lleva a anexar un nuevo usuario-->
+            <?php
+            }
+            ?>
         </section>
     </body>
 
