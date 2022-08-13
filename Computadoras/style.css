@@ -1,0 +1,87 @@
+.error {
+    color: red;
+    text-align: center;
+    align-items: center;
+}
+
+
+/* No uso aling center porque hace incompatibilidad con el desplegable */
+
+form {
+    text-align: center;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+table,
+td {
+    border-collapse: collapse;
+    border: 1px solid black;
+    text-align: center;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+.BotonInicio {
+    width: auto;
+    height: 50px;
+}
+
+.botonAnexar {
+    position: absolute;
+    left: 1000px;
+}
+
+.ConteinerInicio {
+    text-align: center;
+}
+
+.Filtros {
+    text-align: center;
+}
+
+
+/*       CONTENIDO DESPLEGABLE         */
+
+header {
+    font-family: Helvetica;
+    width: 480px;
+    position: absolute;
+}
+
+ul {
+    list-style: none;
+}
+
+#menu li>a {
+    background-color: grey;
+    color: white;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+    min-width: 100px;
+}
+
+#menu li>a:hover {
+    color: #000;
+    background-color: #eaeaea;
+}
+
+#menu>li {
+    float: left;
+    text-align: center
+}
+
+#menu>li>ul {
+    display: none;
+}
+
+#menu>li:hover>ul {
+    display: block;
+}
