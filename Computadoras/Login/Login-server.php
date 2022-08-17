@@ -1,25 +1,31 @@
 <?php
-include("../Union-Server.php"); //incluye la union al servidor de mysql
-if (isset($_POST['submitIn'])) { //toma los datos del formulario registro y lo almaceno en variables
+//incluye la union al servidor de mysql
+include("../Union-Server.php");
+//toma los datos del formulario de inicio de sesion y lo almaceno en variables
+if (isset($_POST['submitIn'])) {
     $email = trim($_POST['email']);
     $contraseña = trim($_POST['contraseña']);
     $_SESSION['email'] = "$email";
 }
-
-if (isset($_POST['submitIn'])) { //toma los datos del formulario registro para subirlo a la base de datos y tirar los mensajes de error
+//toma los datos del formulario para subirlo a la base de datos y tirar los mensajes de error
+if (isset($_POST['submitIn'])) {
     if (empty($email)) { //empty==si esta vacio
         echo "<p class='error'>* Agregue su Email</p>"; //mensaje de error si el mail esta vacio
     }
-    if (empty($contraseña)) { //mensaje de error si la contraseña esta vacio
+    if (empty($contraseña)) {
         echo "<p class='error'>* Ingrese una contraseña</p>";
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //error si el mail es incorrecto si esta mal escrito
         echo "<p class='error'>* Su correo es incorrecto</p>";
     } else {
-        if (strlen($_POST['email']) > 1 && strlen($_POST['contraseña']) > 1) { //verifica que los campos no esten vacios
+        //verifica que los campos del formulario no esten vacios
+        if (strlen($_POST['email']) > 1 && strlen($_POST['contraseña']) > 1) {
+            //Se comparan los datos de sesion con los de la base de datos
             $Pedido = "select * from `login-alumnos` where email = '" . $_POST["email"] . "' and contraseña = '" . $_POST["contraseña"] . "'"; //Inserta todos los datos a la base de datos
-            $Resultado = mysqli_query($conex, $Pedido); //verifica que los datos se hayan enviado correctamente en el if de abajo
-            if (($row = mysqli_fetch_array($Resultado))) { //le da un numero de login al usuario para identificarlo en la columna IDLogin
+            //Se hace la conexion
+            $Resultado = mysqli_query($conex, $Pedido);
+            //if para obtener variables globales
+            if (($row = mysqli_fetch_array($Resultado))) {
                 //usuariologuado
                 $_SESSION["IDLogin"] = $row["IDLogin"];
                 $_SESSION["Nombre"] = $row["Nombre"];
@@ -27,10 +33,9 @@ if (isset($_POST['submitIn'])) { //toma los datos del formulario registro para s
                 $_SESSION["Email"] = $row["Email"];
                 $_SESSION["Imagen"] = $row["Imagen"];
                 //if $_SESSION["UserAdmin"] != 1  no es administrador
-                //header()
                 if ($Resultado) { //verifica que los datos se envien a la base de datos
                     echo "<h>Ingresaste correctamente</h>";
-                    header("location: ../PaginaDeInicio.php"); //lo envia al login
+                    header("location: ../PaginaDeInicio.php"); //lo envia a la pagina de inicio
                 } else {
                     echo "<h2>Ocurrio un error</h2>";
                 }

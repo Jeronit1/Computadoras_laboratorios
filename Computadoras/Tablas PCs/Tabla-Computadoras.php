@@ -72,9 +72,7 @@ $PCs = "SELECT * FROM `pcs` $where ";
 $resPCs = $conex->query($PCs);
 $resLaboratorio = $conex->query($Laboratorios);
 
-if (mysqli_num_rows($resPCs) == 0) {
-    $mensaje = "<h1>No se encontraron registros con esas busquedas</h1>";
-}
+
 
 if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devuelve al formulario
     header("location: ../Login/Login.php");
@@ -107,7 +105,11 @@ if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devu
             </form>
 
             <br></br>
-
+            <?php
+            if (mysqli_num_rows($resPCs) == 0) {
+            $mensaje = "<h1>No se encontraron registros con esas busquedas</h1>";
+            } else{
+                ?>
             <table>
                 <tr>
                     <!-- fila de la tabla-->
@@ -148,7 +150,7 @@ if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devu
                     <?php if ($_SESSION["UserAdmin"]) {
                     ?>
                         <td><a href="../Tablas PCs/update/actualizar.php?ID=<?php echo $mostrar["ID"]; ?>">Editar/</a>
-                        <a href="../Tablas PCs/Historial_PCs.php?ID=<?php echo $mostrar["ID"]; ?>">Historial</a>
+                            <a href="../Tablas PCs/Historial_PCs.php?ID=<?php echo $mostrar["ID"]; ?>">Historial</a>
                         </td>
                 </tr>
     <?php
@@ -167,7 +169,7 @@ if (((empty($_SESSION["Email"])))) { //si el usuario no es administrador lo devu
             ?>
                 <button class="botonAnexar" onclick="window.location.href = '../Agregar PCs/Formulario.php'">Anexar</button><!-- boton que lleva a anexar un nuevo usuario-->
             <?php
-            }
+            }}
             ?>
         </section>
     </body>
