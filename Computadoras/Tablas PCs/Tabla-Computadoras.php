@@ -40,15 +40,40 @@ $paginas = ceil($conteo / $productosPorPagina);
 $offset = ($pagina - 1) * $productosPorPagina;
 if (isset($_POST['xLaboratorio'])) {
     $xLaboratorio = $_POST['xLaboratorio'];
+    $_SESSION['xLaboratorio'] = "$xLaboratorio";
 }
 if (isset($_POST['xProcesador'])) {
     $xProcesador = $_POST['xProcesador'];
+    $_SESSION['xProcesador'] = "$xProcesador";
 }
 if (isset($_POST['xRAM'])) {
     $xRAM = $_POST['xRAM'];
+    $_SESSION['xRAM'] = "$xRAM";
+}
+if (isset($_POST['Zocalos_Libres?'])) {
+    $Zocalos_Libres = $_POST['Zocalos_Libres?'];
+    $_SESSION['Zocalos_Libres'] = "$Zocalos_Libres";
+}
+if (isset($_SESSION['xLaboratorio']))
+    $xLaboratorio = $_SESSION['xLaboratorio'];
+if (isset($_SESSION['xRAM']))
+    $xRAM = $_SESSION['xRAM'];
+if (isset($_SESSION['xProcesador']))
+    $xProcesador = $_SESSION['xProcesador'];
+if (isset( $_SESSION['Zocalos_Libres'])) {
+    $Zocalos_Libres=$_SESSION['Zocalos_Libres'];
 }
 ///////Filtros Funcion////
-if (isset($_POST['buscar'])) {
+if (isset($_POST['buscar']) || isset($_GET['buscar'])) {
+
+    $where = "WHERE Procesador like '%$xProcesador%' AND Laboratorio Like '%$xLaboratorio%' ";
+    if ($xRAM > 0)
+        $where .= "AND RAM > " . $xRAM;
+    if (!empty($Zocalos_Libres))
+        $where .= " AND Zocalos_Libres > " . $Zocalos_Libres;
+    //echo $where;
+
+    /*
     if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xProcesador']) && empty($_POST['xLaboratorio']) && empty($_POST['xRAM'])) {
         $where = "where Zocalos_Libres>'0'";
     } else if (empty($_POST['xLaboratorio']) && empty($_POST['xRAM']) && empty($_POST['Zocalos_Libres?'])) {
@@ -62,28 +87,28 @@ if (isset($_POST['buscar'])) {
     } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xProcesador']) && empty($_POST['xRAM'])) {
         $where = "where Zocalos_Libres>'0' and  Laboratorio='" . $xLaboratorio . "'";
     } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xLaboratorio']) && empty($_POST['xRAM'])) {
-        $where = "where Zocalos_Libres>'0' and Procesador like '" . $xProcesador . "%'";
+        $where = "where Zocalos_Libres>'0' and Procesador like '%" . $xProcesador . "%'";
     } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xLaboratorio'])) {
         $where = "where Zocalos_Libres>'0' and Procesador like '" . $xProcesador . "%' and RAM>" . $xRAM . "";
     } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xRAM'])) {
-        $where = "where Zocalos_Libres>'0' and Procesador like '" . $xProcesador . "%' and Laboratorio='" . $xLaboratorio . "'";
+        $where = "where Zocalos_Libres>'0' and Procesador like '" . $xProcesador . "%' and Laboratorio like '%" . $xLaboratorio . "%'";
     } else if (empty($_POST['Zocalos_Libres?'])) {
-        $where = "where Procesador like '" . $xProcesador . "%' and RAM>" . $xRAM . " and Laboratorio='" . $xLaboratorio . "'";
+        $where = "where Procesador like '" . $xProcesador . "%' and RAM>" . $xRAM . " and Laboratorio like '%" . $xLaboratorio . "%'";
     } else if (!empty($_POST['Zocalos_Libres?'])  && empty($_POST['xProcesador'])) {
-        $where = "where Zocalos_Libres>'0' and RAM>" . $xRAM . " and Laboratorio='" . $xLaboratorio . "'";
+        $where = "where Zocalos_Libres>'0' and RAM>" . $xRAM . " and Laboratorio like'%" . $xLaboratorio . "%'";
     } else if (empty($_POST['xLaboratorio']) && empty($_POST['Zocalos_Libres?'])) {
-        $where = "where RAM>'" . $xRAM . "' and Procesador like '" . $xProcesador . "%'";
+        $where = "where RAM>'" . $xRAM . "' and Procesador like '%" . $xProcesador . "%'";
     } else if (empty($_POST['xProcesador']) && empty($_POST['Zocalos_Libres?'])) {
         $where = "where RAM>'" . $xRAM . "' and Laboratorio='" . $xLaboratorio . "'";
     } else if (empty($_POST['xRAM']) && !empty($_POST['Zocalos_Libres?']) && empty($_POST['xLaboratorio'])) {
-        $where = "where Laboratorio='" . $xLaboratorio . "' and Procesador like '" . $xProcesador . "%'";
+        $where = "where Laboratorio='" . $xLaboratorio . "' and Procesador like '%" . $xProcesador . "%'";
     } else {
-        $where = "where Laboratorio='" . $xLaboratorio . "' and Procesador like '" . $xProcesador . "%' and RAM>'" . $xRAM . "' and Zocalos_Libres>'0'";
-    }
+        $where = "where Laboratorio='" . $xLaboratorio . "' and Procesador like '%" . $xProcesador . "%' and RAM>'" . $xRAM . "' and Zocalos_Libres>'0'";
+    }*/
 }
 ////Consulta a la base de datos/////
-$Laboratorios = "SELECT * FROM `laboratorios`";
-$PCs = "SELECT * FROM `pcs` $where  limit 3 offset $offset";
+$Laboratorios = "SELECT * FROM `laboratorios` ";
+$PCs = "SELECT * FROM pcs $where  limit $productosPorPagina offset $offset";
 $resPCs = $conex->query($PCs);
 $resLaboratorio = $conex->query($Laboratorios);
 
@@ -110,14 +135,20 @@ if (((empty($_SESSION["Email"])))) {
                     <option value="">Laboratorios</option>
                     <?php
                     while ($RegistroLaboratorios = $resLaboratorio->fetch_array(MYSQLI_BOTH)) {
-                        echo '<option value="' . $RegistroLaboratorios['Laboratorio'] . '">' . $RegistroLaboratorios['Laboratorio'] . '</option>';
+                        if ($xLaboratorio == $RegistroLaboratorios['Laboratorio'])
+                            echo '<option value="' . $RegistroLaboratorios['Laboratorio'] . ' " selected>' . $RegistroLaboratorios['Laboratorio'] . '</option>';
+                        else echo '<option value="' . $RegistroLaboratorios['Laboratorio'] . '">' . $RegistroLaboratorios['Laboratorio'] . '</option>';
                     }
                     ?>
                 </select>
                 <!--Procesador, ram y zocalos libres-->
-                <input type="text" placeholder="Procesador..." value="" name="xProcesador">
-                <input type="number" name="xRAM" placeholder="PC con RAM mayor a..." />
-                Ver pc con zocalos Libres<input type="checkbox" name="Zocalos_Libres?" value="1" />
+                <input type="text" placeholder="Procesador..." value="<?php if (!empty($_SESSION['xProcesador'])) {
+                                                                            echo $_SESSION['xProcesador'];
+                                                                        } ?>" name="xProcesador">
+                <input type="number" name="xRAM" value="<?php if (!empty($_SESSION['xRAM'])) {
+                                                            echo $_SESSION['xRAM'];
+                                                        } ?>" placeholder="PC con RAM mayor a..." />
+                Ver pc con zocalos Libres<input type="checkbox" name="Zocalos_Libres?" value="1" <?php if ($Zocalos_Libres) echo "checked"?> />
                 <!-- Boton de busqueda -->
                 <button name="buscar" type="submit">Buscar</button>
             </form>
@@ -126,7 +157,7 @@ if (((empty($_SESSION["Email"])))) {
             <?php
             //Mensaje de error si no se encontro los datos que se insertaron en el filtro
             if (mysqli_num_rows($resPCs) == 0) {
-                $mensaje = "<h1>No se encontraron registros con esas busquedas</h1>";
+                $mensaje = "<h1>No se encontraron mas registros con esas busquedas</h1>";
             } else {
             ?>
                 <table>
@@ -196,19 +227,19 @@ if (((empty($_SESSION["Email"])))) {
             <ul class="pagination">
                 <?php if ($pagina > 1) { ?>
                     <li>
-                        <a href="./Tabla-Computadoras.php?pagina=<?php echo $pagina - 1 ?>">«
+                        <a href="./Tabla-Computadoras.php?buscar=1&pagina=<?php echo $pagina - 1 ?>">«
                         </a>
                     </li>
                 <?php } ?>
                 <?php for ($x = 1; $x <= $paginas; $x++) { ?>
                     <li class="<?php if ($x == $pagina) echo "active" ?>">
-                        <a href="./Tabla-Computadoras.php?pagina=<?php echo $x ?>">
+                        <a href="./Tabla-Computadoras.php?buscar=1&pagina=<?php echo $x ?>">
                             <?php echo $x ?></a>
                     </li>
                 <?php } ?>
                 <?php if ($pagina < $paginas) { ?>
                     <li>
-                        <a href="./Tabla-Computadoras.php?pagina=<?php echo $pagina + 1 ?>">»
+                        <a href="./Tabla-Computadoras.php?buscar=1&pagina=<?php echo $pagina + 1 ?>">»
                         </a>
                     </li>
                 <?php } ?>

@@ -10,6 +10,7 @@ session_start();
 </head>
 
 <body>
+    
     <form action="" method="post">
         <p>Email:<input type="text" name="email" value="<?php
                                                         //El if  Deja escrito en el contenido cuando se recarga la pagina 
@@ -20,6 +21,7 @@ session_start();
         <p><input type="submit" name="submitIn" value="Iniciar sesion" /></p>
         <!--boton de registrarse al hacer clic lo envia al registro-->
         <a href="../Registrarse/Registro.php"><input type="button" value="Registrarse"></a>
+        <a href="../Login/Contraseña.php"><input type="button" value="Olvido su contraseña"></a>
 
     </form>
     <?php

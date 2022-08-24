@@ -1,6 +1,16 @@
 <?php
 //incluye la union al servidor de mysql
 include("../Union-Server.php");
+//recuperar contraseña
+if (isset($_POST['Recuperar_Contraseña'])) {
+    $Email = trim($_POST['email']);
+    $SQL = "SELECT * FROM `login-alumnos` WHERE Email = '" . $Email . "'";
+    $Resultado = mysqli_query($conex, $SQL);
+    $mostrar = mysqli_fetch_array($Resultado);
+    if ($Email == $mostrar['Email']){
+        
+    }
+}
 //toma los datos del formulario de inicio de sesion y lo almaceno en variables
 if (isset($_POST['submitIn'])) {
     $email = trim($_POST['email']);
@@ -10,13 +20,13 @@ if (isset($_POST['submitIn'])) {
 //toma los datos del formulario para subirlo a la base de datos y tirar los mensajes de error
 if (isset($_POST['submitIn'])) {
     if (empty($email)) { //empty==si esta vacio
-        echo "<p class='error'>* Agregue su Email</p>"; //mensaje de error si el mail esta vacio
+       
     }
     if (empty($contraseña)) {
-        echo "<p class='error'>* Ingrese una contraseña</p>";
+        
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //error si el mail es incorrecto si esta mal escrito
-        echo "<p class='error'>* Su correo es incorrecto</p>";
+        
     } else {
         //verifica que los campos del formulario no esten vacios
         if (strlen($_POST['email']) > 1 && strlen($_POST['contraseña']) > 1) {
